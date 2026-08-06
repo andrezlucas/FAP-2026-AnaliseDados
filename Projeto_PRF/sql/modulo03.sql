@@ -373,3 +373,79 @@ update acidentes_prf_2025
 set acidente_fatal = case when mortos >= 1 then true else false end;
 
 select * from acidentes_prf_2025;
+
+SELECT * FROM acidentes_prf_2025
+WHERE acidente_fatal IS TRUE;
+
+SELECT SUM(acidente_fatal) as "Total de Acidents Fatais"
+FROM acidentes_prf_2025;
+
+SELECT sum(acidente_fatal) as "Total de Acidentes Fatais"
+FROM acidentes_prf_2025
+WHERE uf = 'PE'; 
+
+select tipo_acidente as "Tipo de Acidente", 
+    count(id) as "Total de Acidentes",
+    count(mortos) filter (where mortos >= 1) as "Total de Acidentes Fatais",
+    sum(mortos) as "Total de Mortos",
+    replace(printf('%.2f%%', 
+        ((count(mortos) filter (where mortos >= 1)) / count(id)) 
+            * 100.0), '.', ',')
+        as "Taxa de Acidentes Fatais"
+    from acidentes_prf_2025
+    group by tipo_acidente
+    having sum(mortos) >= 100
+    order by (count(mortos) filter (where mortos >= 1)) / count(id) desc;
+
+    select * from vw_acidentes_por_tipo
+    where "Total de Mortos" >= 100
+    order by "Total de Acidentes Fatais" desc;
+
+    select uf as "Estado", municipio as "Município", 
+    count(id) as "Total de Acidentes",
+    count(mortos) filter (where mortos >= 1) as "Total de Acidentes Fatais",
+    sum(mortos) as "Total de Mortos",
+    replace(printf('%.2f%%', 
+        ((count(mortos) filter (where mortos >= 1)) / count(id)) 
+            * 100.0), '.', ',')
+        as "Taxa de Acidentes Fatais"
+    from acidentes_prf_2025
+    group by uf, municipio
+    order by sum(mortos) desc;
+
+    create or replace view vw_acidentes_por_municipio as
+     select uf as "Estado", municipio as "Município", 
+    count(id) as "Total de Acidentes",
+    count(mortos) filter (where mortos >= 1) as "Total de Acidentes Fatais",
+    sum(mortos) as "Total de Mortos",
+    replace(printf('%.2f%%', 
+        ((count(mortos) filter (where mortos >= 1)) / count(id)) 
+            * 100.0), '.', ',')
+        as "Taxa de Acidentes Fatais"
+    from acidentes_prf_2025
+    group by uf, municipio
+    order by sum(mortos) desc;
+
+    select * from vw_acidentes_por_municipio
+    where "Total de Mortos" >= 20;
+
+    SELECT sum (acidente_fatal) / count (id) as "Taxa de acidentes fatais"
+    from acidentes_prf_2025;
+
+with taxa_fatalidade_global as (
+    SELECT sum (acidente_fatal) / count (id) as taxa_fatalidade
+from acidentes_prf_2025
+)
+    select tipo_acidente as "Tipo de Acidente", 
+    count(id) as "Total de Acidentes",
+    count(mortos) filter (where mortos >= 1) as "Total de Acidentes Fatais",
+    sum(mortos) as "Total de Mortos",
+    replace(printf('%.2f%%', 
+        ((count(mortos) filter (where mortos >= 1)) / count(id)) 
+            * 100.0), '.', ',')
+        as "Taxa de Acidentes Fatais",
+        ROUND(((count(mortos) filter (where mortos >= 1)) / count(id)) /
+        taxa_fatalidade, 2) as "Lift"
+    from acidentes_prf_2025, taxa_fatalidade_global
+    group by tipo_acidente, taxa_fatalidade
+    order by "Lift" desc;

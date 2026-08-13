@@ -610,6 +610,9 @@ from acidentes_prf_2025
     TO '/workspaces/FAP-2026-AnaliseDados/Projeto_PRF/resultados/bivariada_tipo_acidente.csv'
      (HEADER, DELIMITER ';');
 
+     select COUNT(*)
+     from acidentes_prf_2025;
+
   
 
     

@@ -13,5 +13,6 @@
             "attached": false
         }
     ],
-    "duckdb.defaultDatabase": "prf_2025"
+    "duckdb.defaultDatabase": "prf_2025",
+    "python-envs.defaultEnvManager": "ms-python.python:system"
 }

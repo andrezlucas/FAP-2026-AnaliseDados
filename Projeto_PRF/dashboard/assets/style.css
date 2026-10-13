@@ -1,0 +1,166 @@
+:root {
+  --navy: #101923;
+  --navy-soft: #172532;
+  --yellow: #f2c500;
+  --blue: #1683d8;
+  --background: #eef1f4;
+  --muted: #52606d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--navy);
+  font-family: Arial, sans-serif;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  background: linear-gradient(110deg, var(--navy) 0%, #263746 72%, var(--yellow) 72%);
+  color: white;
+  padding: 28px 5vw 32px;
+}
+
+.header-content {
+  max-width: 1320px;
+  margin: auto;
+}
+
+.eyebrow {
+  color: var(--yellow);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  margin: 0 0 12px;
+}
+
+h1 {
+  font-size: clamp(24px, 4vw, 42px);
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.subtitle {
+  color: #d5dde5;
+  margin: 12px 0 0;
+}
+
+.content {
+  margin: 0 auto;
+  max-width: 1320px;
+  padding: 22px 5vw 38px;
+}
+
+.filters {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.filter {
+  flex: 1;
+  max-width: 300px;
+}
+
+label {
+  color: var(--muted);
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.metrics {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(5, 1fr);
+  margin-bottom: 18px;
+}
+
+.metric-card {
+  background: var(--navy);
+  border-top: 4px solid var(--yellow);
+  color: white;
+  min-height: 100px;
+  padding: 15px 16px;
+}
+
+.metric-title {
+  color: #c6d0d9;
+  font-size: 11px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.metric-card h2 {
+  font-size: 27px;
+  margin: 18px 0 0;
+}
+
+.chart-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr 1.5fr;
+  margin-bottom: 18px;
+}
+
+.panel {
+  background: white;
+  border-top: 5px solid var(--yellow);
+  box-shadow: 0 2px 8px rgb(16 25 35 / 8%);
+  min-width: 0;
+  padding: 10px 12px 0;
+}
+
+.panel h3 {
+  color: var(--navy);
+  font-size: 16px;
+  margin: 8px 8px 0;
+}
+
+footer {
+  background: var(--navy);
+  color: #c6d0d9;
+  font-size: 12px;
+  padding: 18px 5vw;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .metrics,
+  .chart-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .panel-wide {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-header,
+  .content {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .filters,
+  .metrics,
+  .chart-grid {
+    display: block;
+  }
+
+  .filter,
+  .metric-card,
+  .panel {
+    margin-bottom: 14px;
+    max-width: none;
+  }
+}
